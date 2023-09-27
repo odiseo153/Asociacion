@@ -99,7 +99,6 @@ function VistaMiembro() {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-                <TableCell>Apellido</TableCell>
                 <TableCell>Cedula</TableCell>
                 <TableCell>Fecha de registro</TableCell>
                 <TableCell>Fecha de Ingreso</TableCell>
@@ -113,7 +112,6 @@ function VistaMiembro() {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={i++}>
                     <TableCell>{row.nombre}</TableCell>
-                    <TableCell>{row.apellido}</TableCell>
                     <TableCell>{row.cedula}</TableCell>
                     <TableCell>{row.Fecha_Ingreso}</TableCell>
                     <TableCell>{row.Fecha_Registro}</TableCell>
