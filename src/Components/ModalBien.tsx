@@ -1,7 +1,9 @@
 
+interface valor {
+  parametro: boolean;
+}
 
-
-export default function ModalBien({parametro}){
+export const ModalBien: React.FC<valor> = ({ parametro }) => {
 
 
 return(

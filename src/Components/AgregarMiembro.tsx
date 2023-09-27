@@ -2,7 +2,7 @@
 import { addDoc, collection } from 'firebase/firestore';
 import  { useState } from 'react';
 import db from './Firebase/FireConfig'
-import ModalBien from './ModalBien';
+import {ModalBien} from './ModalBien';
 
 const AgregarMiembro = () => {
   const [fechaIngreso, setFechaIngreso] = useState('');

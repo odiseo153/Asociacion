@@ -52,6 +52,7 @@ function VistaMiembro() {
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    console.log(event);
     setPage(newPage);
   };
 
@@ -75,7 +76,7 @@ function VistaMiembro() {
               <div className="form-group mx-sm-3">
                 <br />
                 <label aria-label="selectOption">Seleccionar un Estatus:</label>
-                <select className="form-control" id="selectOption" name='select' onChange={(e) => setCat(e.target.value)}>
+                <select className="form-control" id="selectOption" title='select' name='l' onChange={(e) => setCat(e.target.value)}>
                   <option value=''>Todos</option>
                   <option value='Socio'>Socio</option>
                   <option value='Coordinador'>Coordinador</option>
