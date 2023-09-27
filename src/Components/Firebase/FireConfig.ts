@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getFirestore} from 'firebase/firestore';
-import key from '../Global/env';
+import key from  '../Global/env.ts';
 
 
 // TODO: Add SDKs for Firebase products that you want to use
