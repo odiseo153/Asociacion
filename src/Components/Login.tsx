@@ -58,7 +58,7 @@ return (
                     <label className="form-label">Contraseña</label>
                   </div>
                   <button className="btn btn-outline-light btn-lg px-5" type="submit" onClick={()=>IniciarSesion()}>
-                    Login
+                    Iniciar Sesion
                   </button>
                 </div>
               </div>
