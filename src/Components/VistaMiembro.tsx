@@ -11,6 +11,8 @@ import consultas from './Firebase/Consultas_Firebase'
 import { DocumentData } from 'firebase/firestore';
 import { Fab } from '@mui/material';
 import { CSVLink } from 'react-csv';
+import { decryptData } from './Encriptacion';
+
 
 function VistaMiembro() {
   const [page, setPage] = React.useState(0);
@@ -18,8 +20,44 @@ function VistaMiembro() {
   const [data, setData] = React.useState<DocumentData[]>([]);
   const [busqueda, setBusqueda] = React.useState<string>('');
   const [categoria, setCat] = React.useState<string>('');
-
   let i=0;
+
+
+//<CSVLink data={data} filename='Miembros.csv' className='excel btn btn-success'>Exportar en Excel</CSVLink>
+
+
+
+const session:string = sessionStorage.getItem('user') || 'no valido';
+const email:string = sessionStorage.getItem('email') || '';
+const clave:string = sessionStorage.getItem('clave') || '';
+
+sessionStorage.removeItem('id');
+
+
+console.log(data);
+
+
+const editOrAdd = (id:string )=>{
+sessionStorage.setItem('id',id)
+}
+
+const Borrar = (id:string) =>{
+console.log(id)
+consultas.login(decryptData(email,'odiseo153'),decryptData(clave,'odiseo153'),false);
+if(session ==='valido'){
+consultas.Borrar(id);
+
+        setTimeout(function () {
+            window.location.href = '/';
+          }, 1000);
+}
+else{
+
+alert("No tiene permisos para realizar esta acción"); 
+window.location.href = '/Login';
+
+}
+}
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -89,7 +127,7 @@ function VistaMiembro() {
         </div>
       </div>
       <br />
-      <Fab href='/agregar' color="primary" className='add btn btn-primary'>
+      <Fab href={session == 'valido' ? '/agregar' : '/Login'} color="primary" className='add btn btn-primary'>
         <i className="fa-solid fa-plus"></i>
       </Fab>
       <CSVLink data={data} filename='Miembros.csv' className='excel btn btn-success'>Exportar en Excel</CSVLink>
@@ -105,6 +143,7 @@ function VistaMiembro() {
                 <TableCell>Direccion</TableCell>
                 <TableCell>Estatus</TableCell>
                 <TableCell>telefono</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -118,6 +157,12 @@ function VistaMiembro() {
                     <TableCell>{row.direccion}</TableCell>
                     <TableCell>{row.estatus}</TableCell>
                     <TableCell>{row.telefono}</TableCell>
+                    <TableCell>
+ <a  className='btn btn-danger' onClick={() => {Borrar(row.id)}}><i className="fa-solid fa-trash"></i></a>
+ <a href='/agregar' className='btn btn-success' onClick={()=>{editOrAdd(row.id)}}><i className="fa-solid fa-user-pen"></i>
+
+</a>
+ </TableCell>
                   </TableRow>
                 );
               })}
