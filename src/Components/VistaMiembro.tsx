@@ -2,7 +2,7 @@ import * as React from 'react';
 import consultas from './Firebase/Consultas_Firebase'
 import { DocumentData } from 'firebase/firestore';
 import { CSVLink } from 'react-csv';
-import { decryptData } from './Encriptacion';
+import { decryptData,ValidarSession } from './Encriptacion';
 import { TablePagination } from '@mui/material';
 
 
@@ -13,17 +13,29 @@ function VistaMiembro() {
   const [busqueda, setBusqueda] = React.useState<string>('');
   const [categoria, setCat] = React.useState<string>('');
 
-
+//ValidarSession();
 
 const session:string = sessionStorage.getItem('user') || 'no valido';
 const email:string = sessionStorage.getItem('email') || '';
 const clave:string = sessionStorage.getItem('clave') || '';
+
 
 sessionStorage.removeItem('id');
 
 
 console.log(data);
 
+const Direccion = 
+session ==null ||
+session === 'no valido' ||
+email ==null ||
+clave ==null ?
+false :
+true;
+
+if(!Direccion){
+window.location.href = '/';
+}
 
 const editOrAdd = (id:string )=>{
 sessionStorage.setItem('id',id)
@@ -36,7 +48,7 @@ if(session ==='valido'){
 consultas.Borrar(id);
 
         setTimeout(function () {
-            window.location.href = '/';
+            window.location.href = '/miembro';
           }, 1000);
 }
 else{
@@ -77,17 +89,7 @@ window.location.href = '/Login';
     return datosFiltrados.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   }
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    console.log(event);
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   return (
     <div>
@@ -113,7 +115,7 @@ window.location.href = '/Login';
       <div className="row mt-4">
         <div className="col-md-12">
           <div className="" role="group">
-            <a href='/agregar' className="btn btn-primary" type="button">Agregar Miembro</a>
+            <a href={Direccion ? '/agregar' : '/Login'} className="btn btn-primary" type="button">Agregar Miembro</a>
             <CSVLink  className="btn btn-success" data={data} filename='Miembros.csv'>Exportar datos a Excel</CSVLink>
           </div>
           <div className="table-responsive">
@@ -130,7 +132,6 @@ window.location.href = '/Login';
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
-              {/* Contenido de la tabla */}
               <tbody>
 
                 
@@ -145,7 +146,7 @@ return (
                   <td>{e.telefono}</td>
                   <td>{e.direccion}</td>
                   <td>  
-                    <a href={'/agregar/'+e.id} onClick={()=>editOrAdd(e.id)} className="btn btn-success btn-sm mr-2" ><i className="fa-solid fa-pencil"></i></a>
+                    <a href={Direccion ? '/agregar/'+e.id : '/Login'} onClick={()=>editOrAdd(e.id)} className="btn btn-success btn-sm mr-2" ><i className="fa-solid fa-pencil"></i></a>
                     <a onClick={()=>Borrar(e.id)} className="btn btn-danger btn-sm"><i className="fa-solid fa-trash"></i></a>
                   </td>
              

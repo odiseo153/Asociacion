@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import db from './Firebase/FireConfig';
 import { ModalBien } from './ModalBien';
 import consultas from './Firebase/Consultas_Firebase';
-import { decryptData } from './Encriptacion';
+import {  decryptData } from './Encriptacion';
 
 
 
@@ -24,7 +24,7 @@ const AgregarMiembro = () => {
 
   const fechaActual: Date = new Date();
   const year: number = fechaActual.getFullYear();
-  const month: number = fechaActual.getMonth() + 1; // Months start from 0
+  const month: number = fechaActual.getMonth() + 1; 
   const day: number = fechaActual.getDate();
 
 
@@ -33,13 +33,12 @@ const email:string = sessionStorage.getItem('email') || '';
 const clave:string = sessionStorage.getItem('clave') || '';
 
 
-
 const id:string = sessionStorage.getItem('id') || '';
 
 
-useEffect(() => { // Usar useEffect para cargar datos iniciales
+useEffect(() => {
     if (session !== 'valido') {
-      window.location.href = '/Login';
+      window.location.href = '/';
     } else {
       consultas.getById(id).then((e) => {
         setDataEdit(e);
@@ -85,7 +84,7 @@ console.log(validacion)
           setSubi(true)}
 
           setTimeout(function () {
-            window.location.href = '/';
+            window.location.href = '/miembros';
           }, 1000);
 
 
@@ -175,10 +174,10 @@ return true;
   return (
     <div>
       <form>
-        <div className="wrapper wrapper--w790">
+        <div className="wrapper wrapper--w790" style={{position:'relative',top:'3em'}}>
           <div className="card card-5">
             <div className="card-heading">
-              <h2 className="title">Registrar Miembros</h2>
+              <h2 className="title">{dataEdit ==null ? 'Registrar Miembro' : 'Editar Miembro'}</h2>
             </div>
             <a href="/" className="botonn btn1 btn-danger" type="submit">
               <i className="fa-solid fa-arrow-left"></i>

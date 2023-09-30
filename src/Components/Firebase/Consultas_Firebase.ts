@@ -56,8 +56,8 @@ const consultas: Consultas = {
 
         if (login) {
           setTimeout(function () {
-            window.location.href = '/agregar';
-          }, 1500);
+            window.location.href = '/miembros';
+          }, 500);
         }
 
         resolve(true);
@@ -67,11 +67,9 @@ const consultas: Consultas = {
         sessionStorage.setItem('user', 'no valido');
         const errorMessage = error.message;
         console.error("Error de autenticación:", errorMessage);
-        alert(errorMessage);
-        setTimeout(function () {
-          window.location.href = '/Login';
-        }, 1500);
 
+          window.location.href = '/';
+ 
         reject(false);
       });
   });

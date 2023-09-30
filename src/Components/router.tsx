@@ -10,10 +10,10 @@ export default function Routers() {
   return (
 <BrowserRouter>
       <Routes>
-          <Route path="/" element={<VistaMiembro />} />
+          <Route path="/miembros" element={<VistaMiembro />} />
           <Route path="/agregar/:id" element={<AgregarMiembro />} />
           <Route path="/agregar" element={<AgregarMiembro />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="*" element={<NoPage/>} />
         </Routes>
     </BrowserRouter>
