@@ -180,7 +180,7 @@ return true;
             <div className="card-heading">
               <h2 className="title">Registrar Miembros</h2>
             </div>
-            <a href="/" className="botonn btn btn-danger" type="submit">
+            <a href="/" className="botonn btn1 btn-danger" type="submit">
               <i className="fa-solid fa-arrow-left"></i>
             </a>
             <div className="card-body">
@@ -304,7 +304,7 @@ return true;
               <div className="botones">
                 <a
                   href="#myModal"
-                  className="trigger-btn btn btn-success"
+                  className="trigger-btn1 btn btn-success"
                   data-toggle="modal"
                   onClick={NewMember}
                 >

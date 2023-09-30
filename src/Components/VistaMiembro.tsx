@@ -1,17 +1,9 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import consultas from './Firebase/Consultas_Firebase'
 import { DocumentData } from 'firebase/firestore';
-import { Fab } from '@mui/material';
 import { CSVLink } from 'react-csv';
 import { decryptData } from './Encriptacion';
+import { TablePagination } from '@mui/material';
 
 
 function VistaMiembro() {
@@ -20,10 +12,6 @@ function VistaMiembro() {
   const [data, setData] = React.useState<DocumentData[]>([]);
   const [busqueda, setBusqueda] = React.useState<string>('');
   const [categoria, setCat] = React.useState<string>('');
-  let i=0;
-
-
-//<CSVLink data={data} filename='Miembros.csv' className='excel btn btn-success'>Exportar en Excel</CSVLink>
 
 
 
@@ -86,7 +74,7 @@ window.location.href = '/Login';
       datosFiltrados = data.filter(x => x.nombre.toLowerCase().includes(busqueda.toLowerCase()) || x.estatus.toLowerCase().includes(categoria.toLowerCase()));
     }
 
-    return datosFiltrados;
+    return datosFiltrados.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -103,82 +91,90 @@ window.location.href = '/Login';
 
   return (
     <div>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6">
-            <form className="form-inline">
-              <div className="form-group">
-                <label>Búsqueda:</label>
-                <input type="text" className="form-control" id="busqueda" onChange={e => setBusqueda(e.target.value)} placeholder="Buscar" />
-              </div>
-              <div className="form-group mx-sm-3">
-                <br />
-                <label aria-label="selectOption">Seleccionar un Estatus:</label>
-                <select className="form-control" id="selectOption" title='select' name='l' onChange={(e) => setCat(e.target.value)}>
-                  <option value=''>Todos</option>
-                  <option value='Socio'>Socio</option>
-                  <option value='Coordinador'>Coordinador</option>
-                  <option value='Miembro'>Miembro</option>
-                </select>
-              </div>
-              <br />
-            </form>
+     <div className="container1">
+      <div className="row mt-4">
+        <div className="col-md-6">
+          {/* Campo de búsqueda */}
+          <div className="input-group">
+            <input type="text" className="form-control" placeholder="Buscar por nombre" onChange={(e)=>{setBusqueda(e.target.value)}} aria-label="Campo de búsqueda" />
+
           </div>
         </div>
+        <div className="col-md-6">
+          {/* Select */}
+          <select className="form-control" onChange={(e)=>{setCat(e.target.value)}}>
+            <option value=''>Todos</option>
+            <option value='Miembro'>Miembros</option>
+            <option value='Socio'>Socios</option>
+            <option value='Coordinador'>Coordinadores</option>
+          </select>
+        </div>
       </div>
-      <br />
-      <Fab href={session == 'valido' ? '/agregar' : '/Login'} color="primary" className='add btn btn-primary'>
-        <i className="fa-solid fa-plus"></i>
-      </Fab>
-      <CSVLink data={data} filename='Miembros.csv' className='excel btn btn-success'>Exportar en Excel</CSVLink>
-      <Paper sx={{ width: '100%', overflow: 'hidden', top: '6em', position: 'relative' }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell>Cedula</TableCell>
-                <TableCell>Fecha de registro</TableCell>
-                <TableCell>Fecha de Ingreso</TableCell>
-                <TableCell>Direccion</TableCell>
-                <TableCell>Estatus</TableCell>
-                <TableCell>telefono</TableCell>
-                <TableCell>Acciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {DatosFiltros().map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={i++}>
-                    <TableCell>{row.nombre}</TableCell>
-                    <TableCell>{row.cedula}</TableCell>
-                    <TableCell>{row.Fecha_Ingreso}</TableCell>
-                    <TableCell>{row.Fecha_Registro}</TableCell>
-                    <TableCell>{row.direccion}</TableCell>
-                    <TableCell>{row.estatus}</TableCell>
-                    <TableCell>{row.telefono}</TableCell>
-                    <TableCell>
- <a  className='btn btn-danger' onClick={() => {Borrar(row.id)}}><i className="fa-solid fa-trash"></i></a>
- <a href='/agregar' className='btn btn-success' onClick={()=>{editOrAdd(row.id)}}><i className="fa-solid fa-user-pen"></i>
+      <div className="row mt-4">
+        <div className="col-md-12">
+          <div className="" role="group">
+            <a href='/agregar' className="btn btn-primary" type="button">Agregar Miembro</a>
+            <CSVLink  className="btn btn-success" data={data} filename='Miembros.csv'>Exportar datos a Excel</CSVLink>
+          </div>
+          <div className="table-responsive">
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Fecha de Registro</th>
+ <th scope="col">Fecha de Ingreso</th>                  
+<th scope="col">Cédula</th>
+                  <th scope="col">Estatus</th>
+                  <th scope="col">Teléfono</th>
+                    <th scope="col">Dirección</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              {/* Contenido de la tabla */}
+              <tbody>
 
-</a>
- </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 25, 100]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
+                
+              {DatosFiltros().map((e,i) =>{
+return (
+<tr key={i}>
+                 <td>{e.nombre}</td>
+                  <td>{e.Fecha_Ingreso}</td>
+                  <td>{e.Fecha_Registro}</td>
+                  <td>{e.cedula}</td>
+                  <td>{e.estatus}</td>
+                  <td>{e.telefono}</td>
+                  <td>{e.direccion}</td>
+                  <td>  
+                    <a href={'/agregar/'+e.id} onClick={()=>editOrAdd(e.id)} className="btn btn-success btn-sm mr-2" ><i className="fa-solid fa-pencil"></i></a>
+                    <a onClick={()=>Borrar(e.id)} className="btn btn-danger btn-sm"><i className="fa-solid fa-trash"></i></a>
+                  </td>
+             
+</tr>
+)
+})}
+                
+                
+
+              </tbody>
+            </table>
+<TablePagination
+  rowsPerPageOptions={[5, 10, 25]}
+  component="div"
+  count={data.length} 
+  rowsPerPage={rowsPerPage}
+  page={page}
+  onPageChange={(event, newPage) => setPage(newPage)}
+  onRowsPerPageChange={(event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }}
+/>
+
+          </div>
+        </div>
+      </div>  
+    </div>
+
     </div>
   );
 }
