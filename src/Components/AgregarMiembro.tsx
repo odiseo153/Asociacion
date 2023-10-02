@@ -59,7 +59,6 @@ useEffect(() => {
             telefono: telefono == '' ? dataEdit?.telefono : telefono
 }
 
-console.log(miembro)
 
 try{
 
@@ -85,7 +84,7 @@ try{
 
           setTimeout(function () {
             window.location.href = '/miembros';
-          }, 1000);
+          }, 100);
 
 
          
@@ -118,78 +117,8 @@ const camposVacios = [];
   return true;
 }
 
- function validarEdit():boolean {
-  const camposVacios = [];
-
-  if ( dataEdit?.fechaIngreso == '') {
-    camposVacios.push('Fecha de Ingreso');
-  }
-
-  if ( dataEdit?.cedula == '') {
-    camposVacios.push('Cédula');
-  }
-
-  if ( dataEdit?.estatus == '') {
-    camposVacios.push('Estatus');
-  }
-
-  if ( dataEdit?.direccion == '') {
-    camposVacios.push('Dirección');
-  }
-
-  if ( dataEdit?.nombre == '') {
-    camposVacios.push('Nombre');
-  }
-
-  if ( dataEdit?.telefono == '') {
-    camposVacios.push('Teléfono');
-  }
-
-  if (camposVacios.length > 0) {
-    const mensaje = `Los siguientes campos están vacíos: ${camposVacios.join(', ')}`;
-    alert(mensaje);
-    return false;
-  }
-
-return true;
-}
 
 
- function validarCamposNoVaciosa():boolean {
-  const camposVacios = [];
-
-  if (fechaIngreso === '' && dataEdit?.fechaIngreso != '') {
-    camposVacios.push('Fecha de Ingreso');
-  }
-
-  if (cedula === '' && dataEdit?.cedula != '') {
-    camposVacios.push('Cédula');
-  }
-
-  if (estatus === '' && dataEdit?.estatus != '') {
-    camposVacios.push('Estatus');
-  }
-
-  if (direccion === '' && dataEdit?.direccion != '') {
-    camposVacios.push('Dirección');
-  }
-
-  if (nombre === '' && dataEdit?.nombre != '') {
-    camposVacios.push('Nombre');
-  }
-
-  if (telefono === '' && dataEdit?.telefono != '') {
-    camposVacios.push('Teléfono');
-  }
-
-  if (camposVacios.length > 0) {
-    const mensaje = `Los siguientes campos están vacíos: ${camposVacios.join(', ')}`;
-    alert(mensaje);
-    return false;
-  }
-
-  return true;
-}
 
   return (
     <div>
@@ -199,7 +128,7 @@ return true;
             <div className="card-heading">
               <h2 className="title">{dataEdit ==null ? 'Registrar Miembro' : 'Editar Miembro'}</h2>
             </div>
-            <a href="/" className="botonn btn1 btn-danger" type="submit">
+            <a href="/miembros" className="botonn btn1 btn-danger" type="submit">
               <i className="fa-solid fa-arrow-left"></i>
             </a>
             <div className="card-body">
