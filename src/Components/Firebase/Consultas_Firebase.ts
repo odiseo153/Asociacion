@@ -83,6 +83,7 @@ const consultas: Consultas = {
     deleteDoc(documento)
   .then(() => {
     console.log('Documento eliminado con éxito');
+   window.location.href = '/miembros'
   })
   .catch((error) => {
     console.error('Error al eliminar el documento:', error);

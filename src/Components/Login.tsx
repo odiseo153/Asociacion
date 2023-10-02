@@ -11,6 +11,12 @@ const [valido,setVali] = useState<boolean>(false);
 
 sessionStorage.removeItem('id');
 
+const IsLogeado = sessionStorage.getItem('user');
+
+if(IsLogeado === 'valido'){
+window.location.href = '/miembros'
+}
+
 const IniciarSesion = ()=>{
 try{
 consultas.login(email,clave,true).then(e => {setVali(e)});

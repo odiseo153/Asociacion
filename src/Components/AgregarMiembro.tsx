@@ -11,12 +11,12 @@ const AgregarMiembro = () => {
 
 
   const [dataEdit,setDataEdit] = useState<DocumentData>();
-  const [fechaIngreso, setFechaIngreso] = useState('');
-  const [cedula, setCedula] = useState('');
-  const [direccion, setDireccion] = useState('');
-  const [estatus, setEstatus] = useState('');
-  const [nombre, setNombre] = useState();
-  const [telefono, setTelefono] = useState('');
+  const [fechaIngreso, setFechaIngreso] = useState<string>('');
+  const [cedula, setCedula] = useState<string>('');
+  const [direccion, setDireccion] = useState<string>('');
+  const [estatus, setEstatus] = useState<string>('');
+  const [nombre, setNombre] = useState<string>();
+  const [telefono, setTelefono] = useState<string>('');
   const [mensaje, setMen] = useState<string>('');
   const [titulo, setTitle] = useState<string>('');
   const [subir, setSubi] = useState<boolean>(false);
@@ -62,12 +62,12 @@ useEffect(() => {
 console.log(miembro)
 
 try{
-const validacion:boolean = dataEdit == null ? validarCamposNoVacios() : validarEdit();
-console.log(validacion)
+
     const coleccion = collection(db, 'Miembros');
         // Add a new document to the collection with the provided data
-
-        if (window.confirm('esta seguro que los datos estan correctos?') && validacion) {
+ 
+      if(validarCamposNoVacios(miembro)){
+        if (window.confirm('esta seguro que los datos estan correctos?')) {
          consultas.login(decryptData(email,'odiseo153'),decryptData(clave,'odiseo153'),false);
       
 
@@ -90,12 +90,32 @@ console.log(validacion)
 
          
         }
+}
       } catch (error) {
       setTitle('Error');
-      setMen('Hubo un error guardando los datos');
+      setMen('Hubo un error guardando los datos'+error);
           setSubi(true)
       console.log(error);  
     }  
+}
+
+
+function validarCamposNoVacios(miembro: any): boolean {
+  const campos = ['Fecha_Ingreso', 'Fecha_Registro','cedula', 'direccion', 'estatus', 'nombre', 'telefono'];
+const camposVacios = [];
+  for (const campo of campos) {
+    if (miembro[campo] === ''  || miembro[campo] == null) {
+     camposVacios.push(campo);
+    }
+  }
+
+  if (camposVacios.length > 0) {
+    const mensaje = `Los siguientes campos están vacíos: ${camposVacios.join(', ')}`;
+    alert(mensaje);
+    return false;
+  }
+
+  return true;
 }
 
  function validarEdit():boolean {
@@ -135,7 +155,7 @@ return true;
 }
 
 
- function validarCamposNoVacios():boolean {
+ function validarCamposNoVaciosa():boolean {
   const camposVacios = [];
 
   if (fechaIngreso === '' && dataEdit?.fechaIngreso != '') {
@@ -289,7 +309,7 @@ return true;
                         defaultValue={dataEdit ==null ? '' : dataEdit.estatus}
                         onChange={(e) => setEstatus(e.target.value)}
                       >
-                        <option selected></option>
+                        <option selected>Seleccione el estatus</option>
                         <option value="Miembro">Miembro</option>
                         <option value="Socio">Socio</option>
                         <option value="Director">Directivo</option>

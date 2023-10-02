@@ -42,14 +42,9 @@ sessionStorage.setItem('id',id)
 }
 
 const Borrar = (id:string) =>{
-console.log(id)
 consultas.login(decryptData(email,'odiseo153'),decryptData(clave,'odiseo153'),false);
 if(session ==='valido'){
 consultas.Borrar(id);
-
-        setTimeout(function () {
-            window.location.href = '/miembro';
-          }, 1000);
 }
 else{
 
