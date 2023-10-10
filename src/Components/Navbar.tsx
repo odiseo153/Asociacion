@@ -27,19 +27,16 @@ sessionStorage.removeItem('clave');
 
 return(
 <div>
-<nav style={{borderRadius:'2em'}} className="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a className="navbar-brand" href="#">Controlador De Miembros</a>
 
-  <div className="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul className="navbar-nav mr-auto">
- <span style={{borderRadius:'5em'}} className='btn btn-success'><i className="fa-solid fa-users"></i>  {cantidad}</span>
-  
-    </ul>
+<div>
+    <span style={{borderRadius:'5em'}} className='btn btn-success'><i className="fa-solid fa-users"></i>{cantidad}</span>
+
     <form className="form-inline my-2 my-lg-0">
       <button style={{borderRadius:'5em'}} className='btn btn-danger' onClick={CerrarSesion}>Cerrar Sesion <i className="fa-solid fa-right-from-bracket"></i></button>
     </form>
-  </div>
-</nav>
+</div>
+
+
 </div>
 )
 }
