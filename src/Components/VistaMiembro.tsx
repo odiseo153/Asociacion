@@ -2,8 +2,9 @@ import * as React from 'react';
 import consultas from './Firebase/Consultas_Firebase'
 import { DocumentData } from 'firebase/firestore';
 import { CSVLink } from 'react-csv';
-import { decryptData,ValidarSession } from './Encriptacion';
+import { decryptData} from './Encriptacion';
 import { TablePagination } from '@mui/material';
+//import ExportExcel from 'react-export-excel'
 
 
 function VistaMiembro() {
@@ -22,8 +23,6 @@ const clave:string = sessionStorage.getItem('clave') || '';
 
 sessionStorage.removeItem('id');
 
-
-console.log(data);
 
 const Direccion = 
 session ==null ||

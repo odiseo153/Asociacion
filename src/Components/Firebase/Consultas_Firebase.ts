@@ -55,9 +55,9 @@ const consultas: Consultas = {
         sessionStorage.setItem('user', 'valido');
 
         if (login) {
-          setTimeout(function () {
+          
             window.location.href = '/miembros';
-          }, 500);
+         
         }
 
         resolve(true);

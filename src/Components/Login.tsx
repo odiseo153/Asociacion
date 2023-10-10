@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import consultas from "./Firebase/Consultas_Firebase";
 
 
@@ -10,6 +10,9 @@ const [clave,setClave] = useState<string>('');
 const [valido,setVali] = useState<boolean>(false);
 
 sessionStorage.removeItem('id');
+
+
+
 
 const IsLogeado = sessionStorage.getItem('user');
 
@@ -31,46 +34,60 @@ alert('ocurrio un error '+error)
 
 
 
+
 return (
-    <div className="container-fluid" >
-      <section className="vh-100 gradient-custom">
+    
+    <section className="vh-10" style={{ backgroundColor: '#9A616D' }}>
+      <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div className="card bg-dark text-white" style={{borderRadius:'5em'}}>
-              <div className="card-body p-5 text-center">
-
-                <div className="mb-md-5 mt-md-4 pb-5">
-                  <h2 className="fw-bold mb-2 text-uppercase">Inicio De Sesion</h2>
-                  <p className="text-white-50 mb-5">Ingrese su nombre y contraseña</p>
-
-                  <div className="form-outline form-white mb-4">
-                    <input
-                      type="email"
-                      onChange={e => {setEmail(e.target.value);}}
-                      placeholder="Nombre de Usuario"
-                      className={valido ? 'verde form-control form-control-lg':'rojo form-control form-control-lg'}
-                    /> 
-                    <label className="form-label">Nombre</label>
+          <div className="col col-xl-10">
+            <div className="card login_card" style={{ borderRadius: '1rem' }}>
+              <div className="row g-0">
+                <div className="col-md-6 col-lg-5 d-none d-md-block">
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                    alt="login form"
+                    className="img-fluid"
+                    style={{ borderRadius: '1rem 0 0 1rem' }}
+                  />
+                </div>
+                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                  <div className="card-body p-4 p-lg-5 text-black">
+                    <form>
+                      <div className="d-flex align-items-center mb-3 pb-1">
+                        <i className="fas fa-cubes fa-2x me-3" style={{ color: 'red' }}></i>
+                        <span className="h1 fw-bold mb-0">Asociacion Invi San Luis</span>
+                      </div>
+                      <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: '1px' }}>
+                        entra con tu email y contraseña
+                      </h5>
+                      <div className="form-outline mb-4">
+                        <input type="email" id="form2Example17" onChange={(e)=>setEmail(e.target.value)} placeholder="Correo" className="form-control form-control-lg" />
+                        <label className="form-label" htmlFor="form2Example17">
+                          Direccion De Correo
+                        </label>
+                      </div>
+                      <div className="form-outline mb-4">
+                        <input type="password" id="form2Example27" onChange={(e)=>setClave(e.target.value)} placeholder="Contraseña" className="form-control form-control-lg" />
+                        <label className="form-label" htmlFor="form2Example27">
+                          Contraseña
+                        </label>
+                      </div>
+                      <div className="pt-1 mb-4">
+                        <button className="btn btn-dark btn-lg btn-block" type="button" onClick={IniciarSesion}>
+                          Login
+                        </button>
+                      </div>
+                     
+                     
+                    </form>
                   </div>
-
-                  <div className="form-outline form-white mb-4">
-                    <input
-                      type="password"
-                      onChange={e => {setClave(e.target.value)}}
-                      placeholder="Contraseña"
-                      className={valido ? 'verde form-control form-control-lg':'rojo form-control form-control-lg'}
-                    />
-                    <label className="form-label">Contraseña</label>
-                  </div>
-                  <button className="btn btn-outline-light btn-lg px-5" type="submit" onClick={()=>IniciarSesion()}>
-                    Iniciar Sesion
-                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

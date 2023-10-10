@@ -1,21 +1,16 @@
-import { DocumentData } from "firebase/firestore";
 import consultas from "./Firebase/Consultas_Firebase";
 import React from "react";
 
 export default function Navbar(){
- const [cantidad, setData] = React.useState<number>([]);
+ const [cantidad, setData] = React.useState<number>();
 
 
-const session = sessionStorage.getItem('user');
-const sessionValida:boolean = session?.trim() == null || session === 'no valido' ? false : true;
-
-
-const CerrarSesion =()=>{
+const CerrarSesion = async()=>{
+window.location.href = '/'
 sessionStorage.removeItem('user');
 sessionStorage.removeItem('email');
 sessionStorage.removeItem('clave');
 
-window.location.href = '/'
 }
 
   React.useEffect(() => {
