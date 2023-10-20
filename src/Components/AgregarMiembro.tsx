@@ -5,12 +5,12 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { useContext, useEffect, useState,createContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import db from "./Firebase/FireConfig";
 import { ModalBien } from "./ModalBien";
 import consultas from "./Firebase/Consultas_Firebase";
 import { decryptData } from "./Encriptacion";
-import { AuthContext } from "./Login";
+
 
 
 
@@ -39,10 +39,6 @@ const AgregarMiembro = () => {
   const clave: string = sessionStorage.getItem("clave") || "";
   const id: string = sessionStorage.getItem("id") || "";
 
-
-const authContext = useContext(AuthContext);
-
-console.log(authContext?.email);
 
 
   useEffect(() => {
