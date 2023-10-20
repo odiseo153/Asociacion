@@ -1,17 +1,31 @@
-import {useState,useEffect} from "react";
+import {useState, createContext} from "react";
 import consultas from "./Firebase/Consultas_Firebase";
+import AgregarMiembro from "./AgregarMiembro";
 
 
 
+interface User  {
+logeado:boolean,
+email:string,
+clave:string
+}
+
+export const AuthContext = createContext<User | undefined>(undefined);
+ 
 export default function Login(){
 
 const [email,setEmail] = useState<string>('');
 const [clave,setClave] = useState<string>('');
 const [valido,setVali] = useState<boolean>(false);
 
+
 sessionStorage.removeItem('id');
 
-
+const usuario:User = {
+logeado:true,
+email:"odiseo",
+clave:"12345567878sfeseff"
+}
 
 
 const IsLogeado = sessionStorage.getItem('user');
@@ -30,13 +44,12 @@ alert('ocurrio un error '+error)
 }
 
 
-
-
+ 
 
 
 
 return (
-    
+    <AuthContext.Provider value={usuario}>
     <section className="vh-10" style={{ backgroundColor: '#9A616D' }}>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
@@ -63,15 +76,11 @@ return (
                       </h5>
                       <div className="form-outline mb-4">
                         <input type="email" id="form2Example17" onChange={(e)=>setEmail(e.target.value)} placeholder="Correo" className="form-control form-control-lg" />
-                        <label className="form-label" htmlFor="form2Example17">
-                          Direccion De Correo
-                        </label>
+
                       </div>
                       <div className="form-outline mb-4">
                         <input type="password" id="form2Example27" onChange={(e)=>setClave(e.target.value)} placeholder="Contraseña" className="form-control form-control-lg" />
-                        <label className="form-label" htmlFor="form2Example27">
-                          Contraseña
-                        </label>
+
                       </div>
                       <div className="pt-1 mb-4">
                         <button className="btn btn-dark btn-lg btn-block" type="button" onClick={IniciarSesion}>
@@ -89,5 +98,6 @@ return (
         </div>
       </div>
     </section>
+</AuthContext.Provider>
   );
 }
